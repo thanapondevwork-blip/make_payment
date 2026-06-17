@@ -16,6 +16,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ระบบชำระหนี้",
   description: "ระบบตรวจสอบสลิปและชำระหนี้",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "ชำระหนี้",
+  },
+  icons: {
+    apple: "/icons/iconiOS.png",
+  },
 };
 
 export default function RootLayout({
