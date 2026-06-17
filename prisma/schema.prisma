@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PaymentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id               String    @id
+  email            String    @unique
+  isAdmin          Boolean   @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  payments         Payment[]
+  approvedPayments Payment[] @relation("ApprovedBy")
+}
+
+model Debt {
+  id          String    @id @default(cuid())
+  totalAmount Float
+  debtorName  String
+  debtorPhone String?
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  payments    Payment[]
+}
+
+model Payment {
+  id             String        @id @default(cuid())
+  debtId         String
+  userId         String
+  amount         Float
+  transRef       String        @unique
+  senderBank     String?
+  senderName     String?
+  receiverBank   String?
+  receiverName   String?
+  slipDate       DateTime
+  isDuplicate    Boolean       @default(false)
+  rawSlipData    Json
+  remark         String?
+  status         PaymentStatus @default(APPROVED)
+  slipImageUrl   String?
+  approvedById   String?
+  approvedAt     DateTime?
+  rejectedReason String?
+  createdAt      DateTime      @default(now())
+  debt           Debt          @relation(fields: [debtId], references: [id])
+  user           User          @relation(fields: [userId], references: [id])
+  approvedBy     User?         @relation("ApprovedBy", fields: [approvedById], references: [id])
+}

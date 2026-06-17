@@ -1,7 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  allowedDevOrigins: ['*.devtunnels.ms', '*.ngrok.io', '*.ngrok-free.app'],
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+      allowedOrigins: ['*.devtunnels.ms', '*.ngrok.io', '*.ngrok-free.app', 'localhost:3000'],
+    },
+  },
 };
 
 export default nextConfig;
