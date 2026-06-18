@@ -23,6 +23,12 @@ export const metadata: Metadata = {
   },
   icons: {
     apple: "/icons/iconiOS.png",
+    other: [
+      {
+        rel: "apple-touch-startup-image",
+        url: "/icons/iconiOS.png",
+      },
+    ],
   },
 };
 
